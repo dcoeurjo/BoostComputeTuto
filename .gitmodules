@@ -1,0 +1,3 @@
+[submodule "compute"]
+	path = compute
+	url = https://github.com/boostorg/compute.git
