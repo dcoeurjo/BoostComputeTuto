@@ -1,6 +1,7 @@
 PROJECT(BoostComputeTuto)
 cmake_minimum_required(VERSION 2.8)
 
+SET(CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}")
 
 # find OpenCL
 find_package(OpenCL REQUIRED)
