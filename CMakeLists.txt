@@ -10,10 +10,7 @@ include_directories(SYSTEM ${OpenCL_INCLUDE_DIRS})
 find_package(Boost 1.48 REQUIRED)
 include_directories(SYSTEM ${Boost_INCLUDE_DIRS})
 
-
-#add_subdirectory (${PROJECT_SOURCE_DIR}/boost_compute)
-include_directories(${PROJECT_SOURCE_DIR}/boost_compute/include)
-
+include_directories(${PROJECT_SOURCE_DIR}/compute/include)
 
 set(EXAMPLES
   helloworld
