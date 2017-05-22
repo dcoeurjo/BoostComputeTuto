@@ -16,6 +16,7 @@ include_directories(${PROJECT_SOURCE_DIR}/compute/include)
 set(EXAMPLES
   helloworld
   devices
+  apply
 )
 
 foreach(EXAMPLE ${EXAMPLES})
