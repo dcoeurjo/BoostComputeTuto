@@ -12,6 +12,11 @@
 
 namespace compute = boost::compute;
 
+//For lambda expressions
+using boost::compute::lambda::_1;
+
+
+
 //External function to generate integer in [0:100)
 int rand_int()
 {
@@ -56,12 +61,19 @@ int main()
                      add_four,
                      queue
                      );
-  
+
+
+  // Substracting 4  using lambda expression
+  boost::compute::transform(device_vector.begin(), device_vector.end(), device_vector.begin(), _1 - 4, queue);
+
   
   // count number of random int less than 50
   size_t count = compute::count_if(device_vector.begin(),device_vector.end(), is_less_than_half, queue);
 
+  //double check on CPU
+  int count_cpu = std::count_if(host_vector.begin(), host_vector.end(), [](int i){return i < 50;});
   
-  std::cout << "Count= "<<count<<std::endl;  
+  
+  std::cout << "Count= "<<count<< "  CPU count= "<<count_cpu<<std::endl;  
   
 }

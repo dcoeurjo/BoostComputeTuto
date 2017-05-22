@@ -3,6 +3,9 @@ cmake_minimum_required(VERSION 2.8)
 
 SET(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake/" ${CMAKE_MODULE_PATH} )
 
+set (CMAKE_CXX_STANDARD 11)
+
+
 # find OpenCL
 find_package(OpenCL REQUIRED)
 include_directories(SYSTEM ${OpenCL_INCLUDE_DIRS})
