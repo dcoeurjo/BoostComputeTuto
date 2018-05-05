@@ -11,7 +11,7 @@
 #include <iostream>
 #include <algorithm>
 
-#include <GL/gl.h>
+#include <gl.h>
 
 #include <vtkActor.h>
 #include <vtkCamera.h>
