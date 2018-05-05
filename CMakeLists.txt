@@ -20,6 +20,7 @@ set(EXAMPLES
   helloworld
   devices
   apply
+  applyKernel
 )
 
 foreach(EXAMPLE ${EXAMPLES})

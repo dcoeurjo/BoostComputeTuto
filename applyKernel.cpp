@@ -14,32 +14,45 @@ namespace compute = boost::compute;
 
 
 const char source[] = BOOST_COMPUTE_STRINGIZE_SOURCE(
-                                                     __kernel void computeDiff(__global const float* position,
+                                                     __kernel void computeDiff(__global const float* positionx,
+                                                                               __global const float* positiony,
                                                                                __global float *diff
                                                                               )
                                                      {
                                                        uint gid = get_global_id(0);
-                                                       
-                                                       diff[gid]= position[gid*2] - position[gid*2 +1];
+
+                                                       diff[gid]= positionx[gid] - positiony[gid];
                                                      }
                                                      );
 
 
 int main()
 {
+
+  /*
+  * Toy example OpenCL kernel in Boost::Compute
+  *
+  * Given a sequence of pairs {(x_i,y_i)}, the kernel
+  * computes diff_i = x_i - y_i.
+  *
+  */
+
   // get default device and setup context
   compute::device device = compute::system::default_device();
   compute::context context(device);
   compute::command_queue queue(context, device);
-  
-  //The hard way..
-  float tab[6] = { 0.0,0.2,1,2,3,4};
-  
-  //create buffers
-  compute::vector<float> m_originalPos(6, context);
- //m_originalPos = new compute::vector<float>(6, context);
-  compute::copy(tab, tab + 6, m_originalPos.begin(), queue);
 
+  //CPU Data
+  std::vector<float> tabx = { 0.0,1.0,3.0};
+  std::vector<float> taby = { 0.0,2.0,40.0};
+
+  //create buffers
+  compute::vector<float> m_originalPosX(3, context);
+  compute::copy(tabx.begin(), tabx.end(), m_originalPosX.begin(), queue);
+  compute::vector<float> m_originalPosY(3, context);
+  compute::copy(taby.begin(), taby.end(), m_originalPosY.begin(), queue);
+
+  //diff vector
   compute::vector<float> diff(3, context);
   std::fill(diff.begin(), diff.end(), 0);
 
@@ -55,14 +68,17 @@ int main()
     // program failed to compile, print out the build log
     std::cout << m_program.build_log() << std::endl;
   }
+
+  //Set up the compute kernel
   compute::kernel diff_kernel;
   diff_kernel = m_program.create_kernel("computeDiff");
-  diff_kernel.set_arg(0, m_originalPos.get_buffer());
-  diff_kernel.set_arg(1, diff.get_buffer());
- 
+  diff_kernel.set_arg(0, m_originalPosX.get_buffer());
+  diff_kernel.set_arg(1, m_originalPosY.get_buffer());
+  diff_kernel.set_arg(2, diff.get_buffer());
+
   //Go Go go..
   queue.enqueue_1d_range_kernel(diff_kernel, 0, 3, 0);
-  
+
   //Get back the diff
   float diff_host[3];
   compute::copy(diff.begin(), diff.end(), diff_host, queue);
