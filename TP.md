@@ -32,7 +32,7 @@ sur certaines machines du bâtiment (en TP7 et 8, des *warnings* lors de l'exec
 
 4. Écrivez un petit programme en utilisant les algorithmes de *boost::compute* prenant en entrée un tableau $tab(i)$ de nombres (aléatoires) et retournant la valeur $val = \sum_i tab(i)^2$.
 
-5. Écrivez un petit programme pour compter le nombre de valeurs impaires de $\{tab(i)^2\}$. Nous souhaitons récupérer dans un tableau annexe, l'ensemble des valeurs impaires de $\{tab(i)^2\}$.
+5. Écrivez un petit programme pour compter le nombre de valeurs impaires de $\{tab(i)^2\}$. Récupérez, dans un tableau annexe, ces valeurs.
 
 6. (optionnel) Plus difficile, comment calculer, sous forme de programmation générique : $val = \sum_{i=0}^{n} i\cdot tab(i)^2$ ? (regardez par exemple les itérateurs génériques de *boost::compute*, nottamenet les `zip_iterators`).
 
@@ -46,7 +46,7 @@ Chaque sphère est donnée par un centre dans l'espace et un rayon. Dans un prem
 
 1. Écrivez un petit generateur de sphère aléatoires, sur le GPU, avec la fonction `generate`. On appelle $\mathcal{S}=\{S_i\}$ la liste des sphères ainsi générées (cf remarque précédente, vous pouvez avoir des buffers indépendants pour le rayon et les positions $x,y,z$).
 
-2. Écrivez le programme permettant de construire un tableau de booléan `isinside` tel que `isinside\[i\]` est vrai si le point $p$ est dans la sphère $S_i$. 
+2. Écrivez le programme permettant de construire un tableau de booléan `isinside` tel que `isinside\[i\]` est vrai si le point $p$ est dans la sphère $S_i$.
 
 3. Modifiez votre programme pour qu'il retourne le nombre de sphères contenant le point $p$.
 
