@@ -29,7 +29,7 @@ BOOST_COMPUTE_FUNCTION(int, add_four, (int x),
     return x + 4;
 });
 
-// function returing true if the point is within the unit circle
+// function returing true if the value is less than 50.
 BOOST_COMPUTE_FUNCTION(bool, is_less_than_half, (const int value),
                        {
                          return (value < 50);
@@ -43,7 +43,7 @@ int main()
   compute::device device = compute::system::default_device();
   compute::context context(device);
   compute::command_queue queue(context, device);
-  
+
   // generate random data on the host
   std::vector<int> host_vector(10000); std::generate(host_vector.begin(), host_vector.end(), rand_int);
 
@@ -66,14 +66,14 @@ int main()
   // Substracting 4  using lambda expression
   boost::compute::transform(device_vector.begin(), device_vector.end(), device_vector.begin(), _1 - 4, queue);
 
-  
+
   // count number of random int less than 50
   size_t count = compute::count_if(device_vector.begin(),device_vector.end(), is_less_than_half, queue);
 
   //double check on CPU
   int count_cpu = std::count_if(host_vector.begin(), host_vector.end(), [](int i){return i < 50;});
-  
-  
-  std::cout << "Count= "<<count<< "  CPU count= "<<count_cpu<<std::endl;  
-  
+
+
+  std::cout << "Count= "<<count<< "  CPU count= "<<count_cpu<<std::endl;
+
 }
